@@ -22,21 +22,19 @@
 // Execute `rustlings hint tests5` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 /// # Safety
 ///
 /// The `address` must contain a mutable reference to a valid `u32` value.
-unsafe fn modify_by_address(address: usize) {
-    // TODO: Fill your safety notice of the code block below to match your
-    // code's behavior and the contract of this function. You may use the
-    // comment of the test below as your format reference.
-    unsafe {
-        todo!("Your code goes here")
-    }
+unsafe fn modify_by_address(address: usize) {  
+    // 安全通知：此函数直接操作内存地址，它假设传入的地址是有效的，  
+    // 并且指向一个u32类型的值。调用者必须确保这些条件得到满足，  
+    // 否则可能会导致未定义行为，包括程序崩溃或数据损坏。  
+    let ptr = address as *mut u32;  
+    *ptr = 0xAABBCCDD; // 将地址处的值设置为0xAABBCCDD  
 }
-
-#[cfg(test)]
+#[cfg(test)]    
 mod tests {
     use super::*;
 

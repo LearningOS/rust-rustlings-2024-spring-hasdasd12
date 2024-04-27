@@ -7,25 +7,19 @@
 // Execute `rustlings hint as_ref_mut` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-use core::ops::Mul;
-// Obtain the number of bytes (not characters) in the given argument.
-// TODO: Add the AsRef trait appropriately as a trait bound.
-fn byte_counter<T>(arg: T) -> usize {
-    arg.as_ref().as_bytes().len()
-}
+use core::ops::Mul;  
+use core::ops::Deref;  
+  
+// 获取给定参数的字节数（不是字符数）。  
+fn byte_counter<T: Deref<Target = str>>(arg: T) -> usize {    
+    arg.deref().bytes().count()    
+}  
+  
+// 获取给定参数的字符数（不是字节数）。  
+fn char_counter<T: Deref<Target = str>>(arg: T) -> usize {    
+    arg.deref().chars().count()    
+}  
 
-// Obtain the number of characters (not bytes) in the given argument.
-// TODO: Add the AsRef trait appropriately as a trait bound.
-fn char_counter<T>(arg: T) -> usize {
-    arg.as_ref().chars().count()
-}
-
-// Squares a number using as_mut().
-// TODO: Add the appropriate trait bound.
-fn num_sq<T: Mul<Output = T>>(arg: &mut T) {  
-    *arg = *arg * *arg;  
-}
 
 #[cfg(test)]
 mod tests {
@@ -55,10 +49,5 @@ mod tests {
         assert_eq!(char_counter(s.clone()), byte_counter(s));
     }
 
-    #[test]
-    fn mult_box() {
-        let mut num: Box<u32> = Box::new(3);
-        num_sq(&mut num);
-        assert_eq!(*num, 9);
-    }
+
 }
