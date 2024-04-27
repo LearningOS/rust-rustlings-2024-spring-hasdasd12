@@ -6,7 +6,7 @@
 //
 // Execute `rustlings hint from_into` or use the `hint` watch subcommand for a
 // hint.
-
+use core::str::FromStr;
 #[derive(Debug)]
 struct Person {
     name: String,
@@ -40,12 +40,43 @@ impl Default for Person {
 // If while parsing the age, something goes wrong, then return the default of
 // Person Otherwise, then return an instantiated Person object with the results
 
-// I AM NOT DONE
 
-impl From<&str> for Person {
-    fn from(s: &str) -> Person {
-    }
-}
+impl FromStr for Person {  
+    type Err = String; // 自定义错误类型  
+  
+    fn from_str(s: &str) -> Result<Self, Self::Err> {  
+        if s.is_empty() {  
+            return Ok(Person::default());  
+        }  
+  
+        let parts: Vec<&str> = s.split(',').collect();  
+  
+        if parts.len() != 2 {  
+            return Err("String does not contain exactly one comma.".to_string());  
+        }  
+  
+        let name = parts[0].trim();  
+        if name.is_empty() {  
+            return Ok(Person::default());  
+        }  
+  
+        let age_str = parts[1].trim();  
+        let age_result = age_str.parse::<usize>();  
+  
+        match age_result {  
+            Ok(age) => Ok(Person { name: name.to_string(), age }),  
+            Err(_) => Ok(Person::default()),  
+        }  
+    }  
+}  
+impl From<&str> for Person {  
+    fn from(s: &str) -> Person {  
+        match s.parse::<Person>() {  
+            Ok(person) => person,  
+            Err(_) => Person::default(),  
+        }  
+    }  
+}  
 
 fn main() {
     // Use the `from` function

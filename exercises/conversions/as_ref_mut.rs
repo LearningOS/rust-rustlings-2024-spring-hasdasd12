@@ -8,7 +8,7 @@
 // hint.
 
 // I AM NOT DONE
-
+use core::ops::Mul;
 // Obtain the number of bytes (not characters) in the given argument.
 // TODO: Add the AsRef trait appropriately as a trait bound.
 fn byte_counter<T>(arg: T) -> usize {
@@ -23,9 +23,8 @@ fn char_counter<T>(arg: T) -> usize {
 
 // Squares a number using as_mut().
 // TODO: Add the appropriate trait bound.
-fn num_sq<T>(arg: &mut T) {
-    // TODO: Implement the function body.
-    ???
+fn num_sq<T: Mul<Output = T>>(arg: &mut T) {  
+    *arg = *arg * *arg;  
 }
 
 #[cfg(test)]
