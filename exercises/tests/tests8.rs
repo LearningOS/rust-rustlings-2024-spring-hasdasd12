@@ -7,7 +7,7 @@
 // Execute `rustlings hint tests8` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
+
 
 fn main() {}
 
@@ -15,11 +15,11 @@ fn main() {}
 mod tests {
     use super::*;
 
-    #[test]
-    fn test_success() {
-        #[cfg(feature = "pass")]
-        return;
-
-        panic!("no cfg set");
-    }
+   #[test]  
+fn test_success() {  
+    #[cfg(pass_feature_enabled)]  
+    return;  
+  
+    panic!("no cfg set");  
+}
 }
