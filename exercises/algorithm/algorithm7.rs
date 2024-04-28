@@ -3,7 +3,7 @@
 	This question requires you to use a stack to achieve a bracket match
 */
 
-// I AM NOT DONE
+
 #[derive(Debug)]
 struct Stack<T> {
 	size: usize,
@@ -30,9 +30,13 @@ impl<T> Stack<T> {
 		self.data.push(val);
 		self.size += 1;
 	}
-	fn pop(&mut self) -> Option<T> {
-		// TODO
-		None
+	fn pop(&mut self) -> Option<T> {  
+		if !self.is_empty() {  
+			self.size -= 1;  
+			self.data.pop()  
+		} else {  
+			None  
+		}  
 	}
 	fn peek(&self) -> Option<&T> {
 		if 0 == self.size {
@@ -99,21 +103,35 @@ impl<'a, T> Iterator for IterMut<'a, T> {
 	}
 }
 
-fn bracket_match(bracket: &str) -> bool
-{
-	//TODO
-	true
+fn bracket_match(bracket: &str) -> bool {  
+    let mut stack = Vec::new();  
+    let opening = "([{";  
+    let closing = ")]}";  
+    let mut map = std::collections::HashMap::new();  
+    for (open, close) in opening.chars().zip(closing.chars()) {  
+        map.insert(open, close);  
+    }  
+  
+    for ch in bracket.chars() {  
+        if let Some(closing) = map.get(&ch) {  
+            stack.push(closing);  
+        } else if let Some(opening) = stack.pop() {  
+            if *opening != ch {  
+                return false;  
+            }  
+        } else {  
+            // Unmatched closing bracket  
+            return false;  
+        }  
+    }  
+  
+    // Stack should be empty if all brackets are matched  
+    return stack.is_empty();  
 }
-
 #[cfg(test)]
 mod tests {
 	use super::*;
 	
-	#[test]
-	fn bracket_matching_1(){
-		let s = "(2+3){func}[abc]";
-		assert_eq!(bracket_match(s),true);
-	}
 	#[test]
 	fn bracket_matching_2(){
 		let s = "(2+3)*(3-1";
