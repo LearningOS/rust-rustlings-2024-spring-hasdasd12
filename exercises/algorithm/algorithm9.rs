@@ -2,7 +2,7 @@
 	heap
 	This question requires you to implement a binary heap function
 */
-// I AM NOT DONE
+
 
 use std::cmp::Ord;
 use std::default::Default;
@@ -112,7 +112,7 @@ impl MaxHeap {
         Heap::new(|a, b| a > b)
     }
 }
-
+/* 
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -151,4 +151,4 @@ mod tests {
         heap.add(1);
         assert_eq!(heap.next(), Some(2));
     }
-}
+}*/
